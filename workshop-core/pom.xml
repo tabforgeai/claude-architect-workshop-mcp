@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ai.tabforge</groupId>
+    <artifactId>claude-architect-workshop-mcp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>workshop-core</artifactId>
+  <name>Workshop Core — Domain Model</name>
+  <description>
+    Pure domain model: Finding, ReviewReport, AgentContext, Severity, HumanDecision.
+    No SDK dependencies. No Spring. No MCP. Just Java records and interfaces.
+    All other modules depend on this one.
+  </description>
+
+  <!--
+    CERTIFICATION NOTE — Prompt Engineering & Structured Output (20% of exam)
+    The domain model defined here (Finding, ReviewReport) is the JSON schema
+    that sub-agents are forced to produce via response_format enforcement.
+    The record types here ARE the output contract for every Claude API call.
+  -->
+
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

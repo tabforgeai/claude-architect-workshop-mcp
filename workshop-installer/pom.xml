@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ai.tabforge</groupId>
+    <artifactId>claude-architect-workshop-mcp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>workshop-installer</artifactId>
+  <packaging>pom</packaging>
+  <name>Workshop Installer — Native Executable Packaging</name>
+  <description>
+    Produces native installers via jpackage:
+      Windows: ClaudeArchitectWorkshop.exe (bundles JRE — no Java needed on target machine)
+      Linux:   claude-architect-workshop.deb / .rpm
+
+    Users configure Claude Desktop / Cursor to point to the .exe directly.
+    They never need to know Java is involved.
+
+    PLACEHOLDER: jpackage configuration will be added in Phase 4.
+    This module exists now so the multi-module structure is complete.
+  </description>
+
+  <!--
+    CERTIFICATION NOTE — Claude Code Configuration & Workflows (20% of exam)
+    The installer output is what gets registered in Claude Desktop's
+    mcpServers configuration. The path in claude_desktop_config.json
+    points to the .exe produced here. Understanding how MCP servers
+    are discovered and launched is part of the Tool Design domain.
+
+    Example claude_desktop_config.json entry (produced in Phase 4):
+    The "command" points to the .exe and "args" passes the API key flag.
+    Full JSON example is in the project README (Phase 4).
+  -->
+
+  <!--
+    No Java sources in this module.
+    jpackage reads the fat JAR from workshop-server/target/ and wraps it.
+    Full jpackage plugin configuration: Phase 4.
+  -->
+
+</project>

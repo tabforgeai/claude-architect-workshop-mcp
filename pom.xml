@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ai.tabforge</groupId>
+  <artifactId>claude-architect-workshop-mcp</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Claude Architect Workshop MCP</name>
+  <description>
+    Open-source MCP server that orchestrates Claude sub-agents to perform
+    code quality review of Java / Jakarta EE projects.
+    Built as a hands-on learning vehicle for the Claude Certified Architect exam.
+  </description>
+
+  <!--
+    CERTIFICATION NOTE — Tool Design & MCP Integration (18% of exam)
+    This project uses TWO SDKs with opposite roles:
+
+      MCP SDK        → Claude Desktop / Cursor calls US  (we ARE an MCP server)
+      Anthropic SDK  → WE call the Claude API            (we ARE a client)
+
+    Understanding this inversion is fundamental to the exam domain.
+    The root POM is where both SDK versions are centrally managed.
+  -->
+
+  <modules>
+    <module>workshop-core</module>
+    <module>workshop-agents</module>
+    <module>workshop-orchestrator</module>
+    <module>workshop-server</module>
+    <module>workshop-installer</module>
+  </modules>
+
+  <properties>
+    <java.version>21</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- SDK versions — two SDKs, two different directions -->
+    <mcp.sdk.version>1.0.0</mcp.sdk.version>
+    <anthropic.sdk.version>2.18.0</anthropic.sdk.version>
+
+    <!-- Supporting libraries -->
+    <jackson.version>2.19.2</jackson.version>
+    <slf4j.version>2.0.13</slf4j.version>
+    <logback.version>1.5.13</logback.version>
+    <junit.version>5.11.3</junit.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <!-- Internal modules -->
+      <dependency>
+        <groupId>ai.tabforge</groupId>
+        <artifactId>workshop-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ai.tabforge</groupId>
+        <artifactId>workshop-agents</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ai.tabforge</groupId>
+        <artifactId>workshop-orchestrator</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ai.tabforge</groupId>
+        <artifactId>workshop-server</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!--
+        MCP SDK — we ARE a server.
+        Claude Desktop connects to us via this SDK.
+        Dependency only needed in workshop-server.
+      -->
+      <dependency>
+        <groupId>io.modelcontextprotocol.sdk</groupId>
+        <artifactId>mcp</artifactId>
+        <version>${mcp.sdk.version}</version>
+      </dependency>
+
+      <!--
+        Anthropic Java SDK — we CALL the Claude API.
+        Each sub-agent uses this to run Claude as a specialist.
+        Dependency needed in workshop-agents and workshop-server (smoke test).
+      -->
+      <dependency>
+        <groupId>com.anthropic</groupId>
+        <artifactId>anthropic-java</artifactId>
+        <version>${anthropic.sdk.version}</version>
+      </dependency>
+
+      <!-- Jackson — JSON serialization of Finding, ReviewReport, etc. -->
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+
+      <!--
+        SLF4J + Logback — CRITICAL: ALL logging must go to STDERR.
+        STDOUT is reserved exclusively for the MCP protocol JSON messages.
+        A single println to stdout corrupts the MCP framing and breaks Claude Desktop.
+      -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>${logback.version}</version>
+      </dependency>
+
+      <!-- JUnit 5 BOM — test coverage for all modules -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- Dependencies present in ALL modules -->
+  <dependencies>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.13.0</version>
+          <configuration>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
+            <encoding>UTF-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.3.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>

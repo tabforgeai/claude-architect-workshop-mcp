@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ai.tabforge</groupId>
+    <artifactId>claude-architect-workshop-mcp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>workshop-orchestrator</artifactId>
+  <name>Workshop Orchestrator — Agentic Loop Engine</name>
+  <description>
+    Central coordination engine: OrchestratorAgent, TaskDecomposer,
+    ContextWindowManager, EscalationHandler, AgentResultAggregator.
+    This is where the agentic loop lives: decompose → dispatch → evaluate → escalate → aggregate.
+  </description>
+
+  <!--
+    CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam)
+    OrchestratorAgent implements the core agentic loop pattern:
+      INIT → DECOMPOSE → DISPATCH → COLLECT → EVALUATE → ESCALATE → AGGREGATE → COMPLETE
+
+    CERTIFICATION NOTE — Context Management & Reliability (15% of exam)
+    ContextWindowManager implements file chunking and token budget enforcement.
+    EscalationHandler implements the human-in-the-loop circuit breaker pattern.
+
+    These two exam domains together = 42% of the exam. This module covers both.
+  -->
+
+  <dependencies>
+    <dependency>
+      <groupId>ai.tabforge</groupId>
+      <artifactId>workshop-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ai.tabforge</groupId>
+      <artifactId>workshop-agents</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

@@ -1,0 +1,52 @@
+# Maven build output
+target/
+*/target/
+
+# Maven wrapper (generated, not source)
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE — Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IDE — IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# IDE — VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Java
+*.class
+*.jar
+!**/test-fixtures/*.jar
+
+# Anthropic API key — NEVER commit this
+.env
+*.env
+anthropic_key.txt
+
+# Claude Code — local AI assistant config and memory (not part of the project)
+.claude/
+
+# Internal planning document — not part of the public repo
+CLAUDE_ARCHITECT_WORKSHOP_MCP_PLAN.md
+
+# Native installer output (Phase 4)
+workshop-installer/output/
+*.exe
+*.deb
+*.rpm
+*.msi
+*.dmg

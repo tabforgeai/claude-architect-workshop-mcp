@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ai.tabforge</groupId>
+    <artifactId>claude-architect-workshop-mcp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>workshop-agents</artifactId>
+  <name>Workshop Agents — Sub-Agent Implementations</name>
+  <description>
+    The four specialist sub-agents + SelfEvaluatorAgent.
+    Each agent calls the Anthropic Java SDK (we are a CLIENT here).
+    SecurityAuditorAgent, TransactionAnalystAgent, PerformanceAnalystAgent,
+    ArchitectureCheckerAgent, SelfEvaluatorAgent.
+  </description>
+
+  <!--
+    CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam)
+    Each class in this module IS a sub-agent in the multi-agent system.
+    The SubAgent abstract class defines the contract; concrete classes implement
+    specialist behavior by crafting domain-specific system prompts and calling
+    the Anthropic Java SDK. This is the "agent specialization" pattern.
+  -->
+
+  <dependencies>
+    <dependency>
+      <groupId>ai.tabforge</groupId>
+      <artifactId>workshop-core</artifactId>
+    </dependency>
+    <!--
+      Anthropic Java SDK: each sub-agent calls Claude API independently.
+      WE are the client; Claude is the expert we consult per specialty.
+    -->
+    <dependency>
+      <groupId>com.anthropic</groupId>
+      <artifactId>anthropic-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ai.tabforge</groupId>
+    <artifactId>claude-architect-workshop-mcp</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>workshop-server</artifactId>
+  <name>Workshop Server — MCP Server Layer</name>
+  <description>
+    The MCP server that Claude Desktop connects to.
+    Exposes MCP tools: start_review, get_report, respond_to_escalation,
+    list_active_reviews, cancel_review.
+    Also contains Main.java (entry point) and ApiSmokeTest.java (Day 1-2 verification).
+  </description>
+
+  <!--
+    CERTIFICATION NOTE — Tool Design & MCP Integration (18% of exam)
+    This module is where we ARE the MCP server (passive side).
+    The MCP SDK's StdioServerTransport reads JSON-RPC from STDIN
+    and writes JSON-RPC to STDOUT — which is why ALL logging must go to STDERR.
+    A single System.out.println here corrupts the MCP protocol framing.
+  -->
+
+  <dependencies>
+    <dependency>
+      <groupId>ai.tabforge</groupId>
+      <artifactId>workshop-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ai.tabforge</groupId>
+      <artifactId>workshop-agents</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ai.tabforge</groupId>
+      <artifactId>workshop-orchestrator</artifactId>
+    </dependency>
+
+    <!--
+      MCP SDK: Claude Desktop calls us via this.
+      StdioServerTransport + McpServer = we become discoverable as an MCP server.
+    -->
+    <dependency>
+      <groupId>io.modelcontextprotocol.sdk</groupId>
+      <artifactId>mcp</artifactId>
+    </dependency>
+
+    <!--
+      Anthropic Java SDK: also needed here for ApiSmokeTest.
+      In production, agents use this — smoke test verifies it's resolvable.
+    -->
+    <dependency>
+      <groupId>com.anthropic</groupId>
+      <artifactId>anthropic-java</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Executable fat JAR — entry point for jpackage in workshop-installer -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>ai.tabforge.workshop.Main</mainClass>
+                </transformer>
+                <!-- Merge META-INF/services for SPI providers (SLF4J, Jackson) -->
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+              </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
