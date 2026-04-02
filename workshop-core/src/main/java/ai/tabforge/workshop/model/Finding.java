@@ -12,7 +12,14 @@ package ai.tabforge.workshop.model;
  * Claude API JSON response. Collected by {@code AgentResultAggregator}
  * into the final {@code ReviewReport}.</p>
  *
- * <p>CERTIFICATION NOTE — Prompt Engineering & Structured Output (20% of exam):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * {@code Finding} is the atomic output unit of every sub-agent. Each specialist
+ * (SecurityAuditorAgent, TransactionAnalystAgent, etc.) produces a list of these.
+ * The {@code AgentResultAggregator} collects them from all agents and merges them
+ * into the final {@code ReviewReport}. This is the data that flows between
+ * the agentic loop stages.</p>
+ *
+ * <p>CERTIFICATION NOTE — Domain 4: Prompt Engineering & Structured Output (20%):
  * This record IS the output contract for every sub-agent API call.
  * The JSON schema enforced via {@code response_format} in each Anthropic API
  * call is derived from the fields of this record. If Claude's response does

@@ -12,7 +12,13 @@ package ai.tabforge.workshop.model;
  * to an escalation in Claude Desktop. Stored in {@code ReviewReport.humanDecisions}
  * as a permanent audit trail of every human intervention in the review.</p>
  *
- * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * {@code HumanDecision} is the re-entry point into the agentic loop after a pause.
+ * When {@code OrchestratorAgent.resumeAfterEscalation()} receives this object,
+ * it uses {@code decisionType} to determine the next stage: update the finding,
+ * recalculate {@code safeToMerge}, and continue dispatching remaining agents.</p>
+ *
+ * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
  * Human-in-the-loop is the pattern where an autonomous agent pauses
  * and yields control to a human for a specific decision, then resumes.
  * {@code HumanDecision} is the object that carries the human's verdict

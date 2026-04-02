@@ -47,7 +47,15 @@ public record AgentResult(
         return errorMessage == null;
     }
 
-    /** Returns total token usage for budget tracking. */
+    /**
+     * Returns total token usage for budget tracking.
+     *
+     * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
+     * {@code ContextWindowManager} calls this method after every agent completes
+     * to track cumulative token consumption across the entire review session.
+     * If the running total approaches the session budget, the manager splits
+     * remaining files into smaller batches before the next agent call.</p>
+     */
     public int totalTokens() {
         return inputTokens + outputTokens;
     }

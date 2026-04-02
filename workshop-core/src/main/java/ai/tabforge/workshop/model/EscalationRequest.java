@@ -23,7 +23,14 @@ import java.util.List;
  * </ol>
  * </p>
  *
- * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * {@code EscalationRequest} is what the {@code OrchestratorAgent} returns to
+ * the MCP layer when it cannot proceed autonomously. The orchestrator stores
+ * the review session in AWAITING_HUMAN state and attaches this object so
+ * {@code GetReportTool} can surface it to Claude Desktop. The loop is paused,
+ * not terminated — it resumes exactly where it stopped once the human decides.</p>
+ *
+ * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
  * This class represents the "pause point" in an agentic loop — the moment
  * when the system decides it cannot continue autonomously and must involve
  * a human. The exam tests: when should an agent pause? What information

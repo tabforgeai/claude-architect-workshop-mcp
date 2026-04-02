@@ -8,7 +8,13 @@ package ai.tabforge.workshop.model;
  * Workshop uses the same three-tier model but for architectural risk,
  * not syntax errors.</p>
  *
- * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * Severity is what the {@code OrchestratorAgent} inspects after every sub-agent
+ * completes. It drives the routing decision: continue autonomously (WARNING/INFO)
+ * or pause and involve a human (CRITICAL). Without a severity model, the
+ * orchestrator cannot make that routing decision.</p>
+ *
+ * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
  * Severity drives the human-in-the-loop escalation logic in
  * {@code EscalationHandler}. The rule: CRITICAL + confidence ≥ 0.70
  * pauses the autonomous review and surfaces a decision to the developer.
