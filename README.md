@@ -115,16 +115,20 @@ belong in this codebase.
 ```
 claude-architect-workshop-mcp/          ← root POM (this repo)
 │
-├── workshop-core/                      ← domain model + interfaces
-│   └── ai.tabforge.workshop.model/
-│       ├── Finding.java                ← one issue found by one agent
-│       ├── ReviewReport.java           ← complete output of a full review
-│       ├── ReviewScope.java            ← what to review (changed files / full project)
-│       ├── AgentResult.java            ← what one sub-agent returns
-│       ├── AgentSummary.java           ← per-agent token + timing stats
-│       ├── EscalationRequest.java      ← sent to human when CRITICAL found
-│       ├── HumanDecision.java          ← developer's response to escalation
-│       └── Severity.java               ← CRITICAL / WARNING / INFO
+├── workshop-core/                      ← domain model + agent contract
+│   ├── ai.tabforge.workshop.model/
+│   │   ├── Finding.java                ← one issue found by one agent
+│   │   ├── ReviewReport.java           ← complete output of a full review
+│   │   ├── ReviewScope.java            ← what to review (changed files / full project)
+│   │   ├── AgentResult.java            ← what one sub-agent returns
+│   │   ├── AgentSummary.java           ← per-agent token + timing stats
+│   │   ├── EscalationRequest.java      ← sent to human when CRITICAL found
+│   │   ├── HumanDecision.java          ← developer's response to escalation
+│   │   └── Severity.java               ← CRITICAL / WARNING / INFO
+│   └── ai.tabforge.workshop.agent/
+│       ├── SubAgent.java               ← abstract base: template method pattern
+│       ├── AgentContext.java            ← files + metadata passed to execute()
+│       └── LifecycleHook.java          ← onBeforeAgent / onAfterAgent / onEscalation
 │
 ├── workshop-agents/                    ← sub-agent implementations (Phase 1-2)
 │   └── ai.tabforge.workshop.agents/
