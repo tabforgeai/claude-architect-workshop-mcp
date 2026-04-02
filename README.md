@@ -91,16 +91,22 @@ Structured JSON report → Claude presents findings to developer
 This single project covers **100% of the Claude Certified Architect exam domains**
 through hands-on implementation.
 
-| Exam Domain | % of Exam | Where It Is Built |
-|---|---|---|
-| Agentic Architecture & Orchestration | 27% | `OrchestratorAgent` + 4 sub-agents, lifecycle hooks, task decomposition |
-| Claude Code Configuration & Workflows | 20% | `CLAUDE.md`, custom slash commands, CI/CD GitHub Action |
-| Prompt Engineering & Structured Output | 20% | JSON schemas per agent, few-shot examples, retry loops |
-| Tool Design & MCP Integration | 18% | MCP tool interfaces, structured error responses |
-| Context Management & Reliability | 15% | File chunking, human-in-the-loop, confidence calibration |
+> Official exam guide: [Claude Certified Architect – Foundations Certification Exam Guide](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F8lsy243ftffjjy1cx9lm3o2bw%2Fpublic%2F1773274827%2FClaude+Certified+Architect+%E2%80%93+Foundations+Certification+Exam+Guide.pdf)
+
+| # | Exam Domain (official name) | % of Exam | Where It Is Built in This Project |
+|---|---|---|---|
+| Domain 1 | Agentic Architecture & Orchestration | 27% | `OrchestratorAgent` + 4 sub-agents, lifecycle hooks, task decomposition |
+| Domain 2 | Tool Design & MCP Integration | 18% | MCP tool interfaces, `StartReviewTool`, `RespondToEscalationTool`, structured error responses |
+| Domain 3 | Claude Code Configuration & Workflows | 20% | `CLAUDE.md`, custom slash commands, CI/CD GitHub Action |
+| Domain 4 | Prompt Engineering & Structured Output | 20% | JSON schemas per agent, few-shot examples, `response_format` enforcement, retry loops |
+| Domain 5 | Context Management & Reliability | 15% | File chunking, human-in-the-loop, confidence calibration, `ContextWindowManager` |
 
 **Every class in the codebase has a `CERTIFICATION NOTE` in its Javadoc
 linking it to the exam domain it teaches.**
+
+**Development rule:** every feature added to this project must map to at least one
+of the five domains above. If a feature does not advance exam coverage, it does not
+belong in this codebase.
 
 ---
 
