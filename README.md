@@ -316,6 +316,28 @@ This codebase is the practice ground.
 
 ---
 
+## This Is a Journey
+
+This project is not built in one sitting. It is developed **incrementally**,
+one concept at a time, with full understanding at each step before moving forward.
+
+Every meaningful phase of development is documented in the
+[Show and tell](https://github.com/tabforgeai/claude-architect-workshop-mcp/discussions/categories/show-and-tell)
+section of this repository's GitHub Discussions — with explanations of:
+
+- what was built and why
+- which exam domain it covers
+- what architectural decision was made and what the alternatives were
+- what the author learned in the process
+
+If you are following along as a fellow CCA candidate, the Discussions are the
+narrative behind the code. The code shows *what* was built; the Discussions
+explain *why* it was built that way.
+
+Speed is not the goal. Understanding is.
+
+---
+
 ## Contributing
 
 This project is in active development as a learning exercise.
