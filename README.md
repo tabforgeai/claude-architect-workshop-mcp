@@ -338,6 +338,17 @@ Speed is not the goal. Understanding is.
 
 ---
 
+## API Documentation
+
+JavaDoc for all modules is published at:
+
+**[https://tabforgeai.github.io/claude-architect-workshop-mcp/](https://tabforgeai.github.io/claude-architect-workshop-mcp/)**
+
+Every class includes `CERTIFICATION NOTE` sections in the Javadoc linking it
+to the relevant CCA exam domain and Task Statement.
+
+---
+
 ## Contributing
 
 This project is in active development as a learning exercise.
