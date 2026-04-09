@@ -63,17 +63,18 @@ public class OrchestratorAgent {
 	 * reviewId. Called by StartReviewTool explicitly, which creates and passes to this method the
 	 * {@code ReviewScope} record instance, based on JSON from Claude AI, for
 	 * example:
-	 * 
+	 * <pre><code>
 	 * { "project_path": "C:/project", "scope": "changed_files", "focus": "all" }
+	 * </code></pre>
 	 * 
 	 * Here is chain of calls describing how this method is called:
-	 * 
+	 * <pre><code>
 	 * - Developer: "Review my changes before PR" 
 	 * - Claude: → undersand intent, and  calls StartReviewTool(projectPath, scope) 
 	 * -StartReviewTool: → create ReviewScope
 	 *                    → calls OrchestratorAgent.startReview(scope) → returns {
 	 *                      reviewId: "abc-123" } without waiting to Claude AI
-	 *
+	 *</code></pre>
 	 * <p>
 	 * Analogy: like submitting a job to Java's ExecutorService — you get a Future
 	 * (reviewId) immediately; the work runs in the background. The MCP caller
@@ -99,7 +100,7 @@ public class OrchestratorAgent {
 	 * explicitly in the GetReportTool.
 	 * 
 	 * Here is chain of call for this method:
-	 * 
+	 * <pre><code>
 	 * Developer: "Review my changes before PR" 
        Claude AI:                 → calls StartReviewTool(projectPath, scope) 
        StartReviewTool:   → create ReviewScope 
@@ -111,15 +112,16 @@ public class OrchestratorAgent {
        GetReportTool:     → returns { status: "COMPLETED", report: {...} } 
        Claude AI:                 → presents findings to the developer in natural language. This is because of GetReportTool description part:
                                     "If status is COMPLETED, present the findings to the developer."
-
+       </code></pre>
 	 * 
 	 * @param reviewId
-	 * @return : RUNNING : Review is currently running — agents are executing
-	 *         AWAITING_HUMAN : Review is paused — a CRITICAL finding requires human
-	 *         input COMPLETED : Review completed successfully — report is final.
-	 *         CANCELLED : Review was cancelled by the developer FAILED : Review
-	 *         failed due to an unrecoverable error
-	 * 
+	 * @return : <pre><code>
+	 *           RUNNING : Review is currently running — agents are executing
+	 *           AWAITING_HUMAN : Review is paused — a CRITICAL finding requires human input
+	 *           COMPLETED : Review completed successfully — report is final.
+	 *           CANCELLED : Review was cancelled by the developer 
+	 *           FAILED : Review    failed due to an unrecoverable error
+	 *          </code></pre>
 	 *         {@code GetReportTool} returns different JSON to the Claude AI based
 	 *         on which state the review is in — running progress vs. final report
 	 *         vs. escalation request
@@ -131,7 +133,7 @@ public class OrchestratorAgent {
 	
 	 /**
 	  * Will be called by the {@link SubAgent#execute()} during file processing,
-	  * to push live progress data into the ReviewSession.
+	  * to push live progress data into the {@code ReviewSession} .
 	  *
 	  * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture &amp; Orchestration (27%):
 	  * Covers Task Statement 1.7: <em>"Manage session state, resumption, and forking"</em>.
@@ -140,13 +142,15 @@ public class OrchestratorAgent {
 	  * without polling the agent. State is maintained in the orchestrator, not in the agent.
 	  * </p>
 	  *
-	  *   Let say, OrchestratorAgent (this class) starts SecurityAuditorAgent in the startReview() method
+	  *   Let say, OrchestratorAgent (this class) starts SecurityAuditorAgent in the startReview() method.
+      <pre><code>   
+
       │
       │  agent processes file by file
       │  for each file it starts processing:
       │
       ▼
-
+   
       for (Path file : context.getFileList()) {
 
         // HERE: let's inform the orchestrator which file we are processing now:
@@ -158,9 +162,10 @@ public class OrchestratorAgent {
          // we are collecting results:
          allFindings.addAll(findings);
       }
+      </code></pre>
       - - - -
       
-       So when Claude AI calls GetReportTool — the data is already  in the ReviewSession. GetReportTool only reads the current state  
+       So when Claude AI calls GetReportTool — the data is already  in the {@code ReviewSession}. GetReportTool only reads the current state  
 
 	  * @param reviewId
 	  * @param currentFile

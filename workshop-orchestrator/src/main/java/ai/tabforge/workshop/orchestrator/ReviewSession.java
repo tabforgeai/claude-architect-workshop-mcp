@@ -7,11 +7,9 @@ import ai.tabforge.workshop.model.ReviewScope;
 /**
  * 
  *  When Claude AI periodically calls GetReportTool in order to obtain review status (and so, when  GetReportTool calls {@link OrchestratorAgent#getStatus()})
- *  then, if the status is not  {@link ReviewReport.ReviewStatus#COMPLETED}, the GetReportToll will return JSON filled with data from this class.
+ *  the GetReportToll will return JSON filled with data from this class.
  *  
  *  An instance of this class is created in {@link OrchestratorAgent#startReview())} and is stored in an internal list of active sessions.
- *  
- *  
  *  
  *  
 
