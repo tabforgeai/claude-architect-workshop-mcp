@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import ai.tabforge.workshop.agent.ProgressReporter;
+import ai.tabforge.workshop.agent.SubAgent;
+import ai.tabforge.workshop.model.Finding;
 import ai.tabforge.workshop.model.HumanDecision;
 import ai.tabforge.workshop.model.ReviewScope;
 
@@ -43,6 +46,8 @@ import ai.tabforge.workshop.model.ReviewScope;
  * <li>COMPLETE: store ReviewReport, mark session as done</li>
  * </ol>
  * </p>
+ * 
+ * This behavior is implemented in the startReview() method of this class.
  *
  * @see TaskDecomposer for how the project is split into reviewable chunks
  * @see ContextWindowManager for how token limits are respected per agent call
@@ -50,7 +55,7 @@ import ai.tabforge.workshop.model.ReviewScope;
  * @see AgentResultAggregator for how findings from all agents are merged
  */
 
-public class OrchestratorAgent {
+public class OrchestratorAgent implements ProgressReporter{
 	/*
 	 * list of active sessions - agents jobs. startReview() will write there, the
 	 * getStatus() will read from here. The key for this map is the reviewId
@@ -80,6 +85,7 @@ public class OrchestratorAgent {
 	 * (reviewId) immediately; the work runs in the background. The MCP caller
 	 * (Claude AI) does not block waiting for results.
 	 * </p>
+	 * 
 	 *
 	 * @param scope ReviewScope defining project path and review depth
 	 * @return reviewId (UUID) used by all subsequent tool calls - StartReviewTool returns this value to Claude AI
@@ -170,11 +176,18 @@ public class OrchestratorAgent {
 	  * @param reviewId
 	  * @param currentFile
 	  */
+	 @Override
 	  public void updateProgress(String reviewId, String currentFile) {
 	      ReviewSession session = activeSessions.get(reviewId);
 	      session.setCurrentlyProcessedFile(currentFile);
 	      session.setProcessedFiles(session.getProcessedFiles() + 1);
 	  }
+	 
+		@Override
+		public void escalate(String reviewId, Finding finding) {
+			
+		}
+
 
 	/**
 	 * Resumes a paused review after the developer has responded to an escalation.
@@ -190,4 +203,5 @@ public class OrchestratorAgent {
 	public void resumeAfterEscalation(String reviewId, HumanDecision decision) {
 		// TODO:
 	}
+
 }

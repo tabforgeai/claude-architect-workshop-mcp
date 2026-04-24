@@ -36,7 +36,11 @@ package ai.tabforge.workshop.model;
  * @param suggestion  concrete fix recommendation the developer can act on
  * @param confidence  0.0–1.0 confidence score; below 0.70 is auto-downgraded
  *                    from WARNING to INFO by {@code EscalationHandler}
- * @param ruleId      machine-readable identifier, e.g. "SEC-001", "TXN-003"
+ * @param ruleId      machine-readable identifier, e.g. "SEC-001", "TXN-003". The identifier of the rule applied by the agent.
+ *                     These are internal values ​​that are defined in the agent class. At the system prompt, we tell Claude which rule IDs he can use:
+ *                      "For SQL injection findings, always use ruleId: SEC-001.
+                        For hardcoded secrets, always use ruleId: SEC-002..." 
+ *                     
  */
 public record Finding(
         Severity severity,
