@@ -36,7 +36,7 @@ public class SecurityAuditorAgent extends DefaultSubAgent {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityAuditorAgent.class);
 
-	protected SecurityAuditorAgent(ProgressReporter orchestrator, AnthropicClient client) {
+	public SecurityAuditorAgent(ProgressReporter orchestrator, AnthropicClient client) {
 		super(orchestrator, client);
 		// TODO Auto-generated constructor stub
 	}

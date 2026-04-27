@@ -147,6 +147,10 @@ public class ReviewSession {
 	public String getStartedAt() {
 		return startedAt;
 	}
+	
+	public ReviewSession() {
+		
+	}
 
 	public ReviewSession(String reviewId, ReviewScope scope, ReviewReport.ReviewStatus status, ReviewReport report,
 			EscalationRequest pendingEscalation, String startedAt) {
@@ -157,5 +161,6 @@ public class ReviewSession {
 		this.pendingEscalation = pendingEscalation;
 		this.startedAt = startedAt;
 	}
+
 
 }
