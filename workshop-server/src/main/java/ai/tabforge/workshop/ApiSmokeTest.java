@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *       we receive tool calls, we return results.</li>
  * </ul>
  *
- * <p>CERTIFICATION NOTE — Tool Design & MCP Integration (18% of exam):
+ * <p>CERTIFICATION NOTE — Tool Design &amp; MCP Integration (18% of exam):
  * Understanding the client/server inversion between these two SDKs is
  * the first concept tested in the Tool Design domain. This smoke test
  * makes the inversion concrete and executable.</p>

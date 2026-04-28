@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * structured protocol on STDIN/STDOUT. Your IDE's log window shows
  * its stderr; it never clutters the protocol channel.</p>
  *
- * <p>CERTIFICATION NOTE — Tool Design & MCP Integration (18% of exam):
+ * <p>CERTIFICATION NOTE — Tool Design &amp; MCP Integration (18% of exam):
  * The MCP server lifecycle (start → register tools → serve → shutdown)
  * is what this class orchestrates. The tools themselves live in
  * {@code ai.tabforge.workshop.tools}.</p>

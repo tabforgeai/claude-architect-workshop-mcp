@@ -66,6 +66,17 @@ import ai.tabforge.workshop.model.ReviewScope;
  * 
  * This behavior is implemented in the startReview() method of this class.
  *
+ * <p>Created by: {@code WorkshopServer.start()} — a single instance is created at server
+ * startup and shared across all MCP tool calls. It is injected into each tool:
+ * <pre><code>
+ * OrchestratorAgent orchestrator = new OrchestratorAgent();
+ * tools.add(new StartReviewTool(orchestrator).toolSpecification(jsonMapper));
+ * tools.add(new GetReportTool(orchestrator).toolSpecification(jsonMapper));
+ * tools.add(new RespondToEscalationTool(orchestrator).toolSpecification(jsonMapper));
+ * </code></pre>
+ * This ensures all tools share the same {@code activeSessions} map — StartReviewTool
+ * writes a session, GetReportTool reads it, RespondToEscalationTool modifies it.</p>
+ *
  * @see TaskDecomposer for how the project is split into reviewable chunks
  * @see ContextWindowManager for how token limits are respected per agent call
  * @see EscalationHandler for the human-in-the-loop decision logic
