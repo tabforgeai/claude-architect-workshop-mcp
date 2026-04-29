@@ -15,7 +15,7 @@
   <name>Workshop Orchestrator — Agentic Loop Engine</name>
   <description>
     Central coordination engine: OrchestratorAgent, TaskDecomposer,
-    ContextWindowManager, EscalationHandler, AgentResultAggregator.
+    ContextWindowManager, AgentResultAggregator.
     This is where the agentic loop lives: decompose → dispatch → evaluate → escalate → aggregate.
   </description>
 
@@ -26,7 +26,7 @@
 
     CERTIFICATION NOTE — Context Management & Reliability (15% of exam)
     ContextWindowManager implements file chunking and token budget enforcement.
-    EscalationHandler implements the human-in-the-loop circuit breaker pattern.
+    OrchestratorAgent.escalate() implements the human-in-the-loop circuit breaker pattern.
 
     These two exam domains together = 42% of the exam. This module covers both.
   -->

@@ -1,5 +1,8 @@
 package ai.tabforge.workshop.orchestrator;
 
+import java.util.concurrent.CountDownLatch;
+
+import ai.tabforge.workshop.agent.SubAgent;
 import ai.tabforge.workshop.model.EscalationRequest;
 import ai.tabforge.workshop.model.ReviewReport;
 import ai.tabforge.workshop.model.ReviewScope;
@@ -48,7 +51,23 @@ public class ReviewSession {
 	 * 
 	 */
 	private String currentlyProcessedFile;   // "OrderResource.java"
+	private CountDownLatch latch; // blocking mechanism
 	
+	public CountDownLatch getLatch() {
+		return latch;
+	}
+    /**
+     * 
+     * @param latch {@link OrchestratorAgent#escalate()}  (which is called in {@link SubAgent#execute()})  - will make CountDownLatch and preserve it here
+     *     Will be read and released in the  {@link OrchestratorAgent#resumeAfterEscalation()}.
+     *     
+     *     It needs to be stored in the session, because that way it can be retrieved in resumeAfterEscalation() - which accept the reviewId
+     *     
+     */
+	public void setLatch(CountDownLatch latch) {
+		this.latch = latch;
+	}
+
 	public String getCurrentAgentName() {
 		return currentAgentName;
 	}

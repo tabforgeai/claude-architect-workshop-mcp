@@ -67,6 +67,11 @@ public record HumanDecision(
          * is set to true with a note that the risk was accepted.
          * Creates a clear audit trail: "this risk was seen and accepted."
          */
-        OVERRIDE_CONTINUE
+        OVERRIDE_CONTINUE,
+        /**
+         * Developer wants to stop the review entirely.
+         * Sets ReviewSession status to CANCELLED and releases the blocked agent thread.
+         */
+        CANCEL
     }
 }

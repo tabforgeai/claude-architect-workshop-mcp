@@ -35,7 +35,7 @@ package ai.tabforge.workshop.model;
  * @param message     human-readable description of the problem
  * @param suggestion  concrete fix recommendation the developer can act on
  * @param confidence  0.0–1.0 confidence score; below 0.70 is auto-downgraded
- *                    from WARNING to INFO by {@code EscalationHandler}
+ *                    from WARNING to INFO by {@code OrchestratorAgent#escalate()}
  * @param ruleId      machine-readable identifier, e.g. "SEC-001", "TXN-003". The identifier of the rule applied by the agent.
  *                     These are internal values ​​that are defined in the agent class. At the system prompt, we tell Claude which rule IDs he can use:
  *                      "For SQL injection findings, always use ruleId: SEC-001.
@@ -77,7 +77,7 @@ public record Finding(
      *
      * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
      * The 0.70 threshold is the confidence calibration boundary used by
-     * {@code EscalationHandler}. Findings below this threshold are
+     * {@code OrchestratorAgent#escalate()}. Findings below this threshold are
      * downgraded to INFO — the agent signals uncertainty rather than
      * asserting a risk it cannot substantiate.</p>
      */

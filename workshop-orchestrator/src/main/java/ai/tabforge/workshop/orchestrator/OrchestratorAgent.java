@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,6 +23,7 @@ import ai.tabforge.workshop.agents.ArchitectureCheckerAgent;
 import ai.tabforge.workshop.agents.PerformanceAnalystAgent;
 import ai.tabforge.workshop.agents.SecurityAuditorAgent;
 import ai.tabforge.workshop.agents.TransactionAnalystAgent;
+import ai.tabforge.workshop.model.EscalationRequest;
 import ai.tabforge.workshop.model.Finding;
 import ai.tabforge.workshop.model.HumanDecision;
 import ai.tabforge.workshop.model.ReviewReport;
@@ -58,7 +60,7 @@ import ai.tabforge.workshop.model.ReviewScope;
  * <li>COLLECT: receive AgentResult; fire onAfterAgent() hook</li>
  * <li>EVALUATE: SelfEvaluatorAgent checks output quality; retry if
  * insufficient</li>
- * <li>ESCALATE: EscalationHandler checks for CRITICAL — pause if found</li>
+ * <li>ESCALATE: escalate() checks for CRITICAL — pause if found</li>
  * <li>AGGREGATE: AgentResultAggregator merges all findings</li>
  * <li>COMPLETE: store ReviewReport, mark session as done</li>
  * </ol>
@@ -79,7 +81,7 @@ import ai.tabforge.workshop.model.ReviewScope;
  *
  * @see TaskDecomposer for how the project is split into reviewable chunks
  * @see ContextWindowManager for how token limits are respected per agent call
- * @see EscalationHandler for the human-in-the-loop decision logic
+ * @see #escalate(String, Finding) for the human-in-the-loop decision logic
  * @see AgentResultAggregator for how findings from all agents are merged
  */
 
@@ -257,14 +259,48 @@ public class OrchestratorAgent implements ProgressReporter{
 	      session.setProcessedFiles(session.getProcessedFiles() + 1);
 	  }
 	 
-		@Override
-		public void escalate(String reviewId, Finding finding) {
-			
-		}
+	 /**
+	  * 
+	  */
+	  @Override
+	  public void escalate(String reviewId, Finding finding) {
+	      ReviewSession session = activeSessions.get(reviewId);
 
+	      // 1. kreira pitanje — standardno ili sa napomenom o nesigurnosti
+	      String question = finding.confidence() >= 0.85
+	          ? EscalationRequest.standardQuestion(finding)
+	          : EscalationRequest.uncertaintyQuestion(finding);
+
+	      // 2. kreira EscalationRequest i upisuje u session
+	      EscalationRequest escalation = new EscalationRequest(
+	          reviewId, finding, question,
+	          List.of(HumanDecision.DecisionType.ACCEPT_FIX,
+	                  HumanDecision.DecisionType.REJECT_FINDING,
+	                  HumanDecision.DecisionType.OVERRIDE_CONTINUE),
+	          Instant.now().toString(),
+	          null
+	      );
+	      session.setPendingEscalation(escalation);
+	      session.setStatus(ReviewReport.ReviewStatus.AWAITING_HUMAN);
+
+	      // 3. pravi latch i čuva ga — resumeAfterEscalation() će pozvati countDown()
+	      // It needs to be stored in the session, because that way it can be retrieved in resumeAfterEscalation() 
+	      CountDownLatch latch = new CountDownLatch(1);
+	      session.setLatch(latch);
+
+	      // 4. blocks the agent thread until the developer responds - This thread will wait until the latch drops to 0:
+	      try {
+	          latch.await();
+	      } catch (InterruptedException e) {
+	          Thread.currentThread().interrupt();
+	          session.setStatus(ReviewReport.ReviewStatus.FAILED);
+	      }
+	  }
 
 	/**
 	 * Resumes a paused review after the developer has responded to an escalation.
+	 * Blocked agent thread - {@link SubAgent#execute()} - can continue working
+	 * (was previously blocked by escalate() method call, from SubAgent.execute() )
 	 *
 	 * <p>
 	 * Called by: RespondToEscalationTool when the developer makes a decision in
@@ -272,10 +308,20 @@ public class OrchestratorAgent implements ProgressReporter{
 	 * </p>
 	 *
 	 * @param reviewId the paused session to resume
-	 * @param decision ACCEPT_FIX / REJECT_FINDING / OVERRIDE_CONTINUE
+	 * @param decision ACCEPT_FIX / REJECT_FINDING / OVERRIDE_CONTINUE .
+	 *              Created and passed here by the RespondToEscalationTool 
 	 */
-	public void resumeAfterEscalation(String reviewId, HumanDecision decision) {
-		// TODO:
-	}
+	  public void resumeAfterEscalation(String reviewId, HumanDecision decision) {
+	      ReviewSession session = activeSessions.get(reviewId);
 
+	      if (decision.decisionType() == HumanDecision.DecisionType.CANCEL) {
+	          session.setStatus(ReviewReport.ReviewStatus.CANCELLED);
+	      } else {
+	          // ACCEPT_FIX / REJECT_FINDING / OVERRIDE_CONTINUE — review nastavlja
+	          session.setStatus(ReviewReport.ReviewStatus.RUNNING);
+	          session.setPendingEscalation(null); // GetReportTool no longer returns AWAITING_HUMAN 
+	      }
+          // now, unlocks a blocked agent thread:  
+	      session.getLatch().countDown(); 
+	  }
 }

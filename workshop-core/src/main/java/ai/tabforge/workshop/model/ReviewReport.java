@@ -75,7 +75,7 @@ public record ReviewReport(
         FAILED
     }
 
-    /** Returns only CRITICAL findings — used by {@code EscalationHandler}. */
+    /** Returns only CRITICAL findings — used by {@code OrchestratorAgent#escalate()}. */
     public List<Finding> criticalFindings() {
         return findings.stream()
                 .filter(f -> f.severity() == Severity.CRITICAL)

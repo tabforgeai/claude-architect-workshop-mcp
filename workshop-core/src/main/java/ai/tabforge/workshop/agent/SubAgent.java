@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import ai.tabforge.workshop.model.AgentResult;
 import ai.tabforge.workshop.model.Finding;
+import ai.tabforge.workshop.model.Severity;
 
 
 
@@ -47,6 +48,14 @@ public abstract class SubAgent {
      	      //  Claude API call:
               AgentResult result = analyzeFile(prompt, fileContent);
               allFindings.addAll(result.findings());
+              
+              for (Finding f : result.findings()) {
+                  if (f.severity() == Severity.CRITICAL) {
+                      orchestrator.escalate(context.getReviewId(), f);
+                      // blokira se ovde dok developer ne odgovori
+                  }
+              }              
+              
               totalInputTokens += result.inputTokens();
               totalOutputTokens += result.outputTokens();
               // prepare data for GetReportTool, so GetReportTool can always return current state  without polling the agent:

@@ -3,6 +3,7 @@ package ai.tabforge.workshop.agent;
 import ai.tabforge.workshop.model.Finding;
 
 
+
 /**
  * SubAgent need reference for OrchestratorAgent.
  * 
@@ -23,6 +24,12 @@ public interface ProgressReporter {
      *   <p>
      *   By calling this method, the agent sends the reviewId, as well as information about his finding for the file it processes ( Severity - CRITICAL, INFO, WARNING, then lineNumber, ...)
      *   Knowing rewiewId and Finding, this method then sends the Finding on deciding what to do - let's call the mechanism that decides what to do next - the Escalation Handler
+     *   </p>
+     *   
+     *   <p>
+     *     This method will be called  by the {@link SubAgent#execute()}. Since the implementation of this method typically uses 
+     *     java.util.concurrent.CountDownLatch await(), this means SubAgent#execute() will wait (being blocked), 
+     *     it will remain in this state until another thread  - in our case,  {@link OrchestratorAgent#resumeAfterEscalation()} - calls countDown()
      *   </p>
      * @param reviewId
      * @param finding

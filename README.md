@@ -143,7 +143,6 @@ claude-architect-workshop-mcp/          ← root POM (this repo)
 │       ├── OrchestratorAgent.java      ← drives the review lifecycle
 │       ├── TaskDecomposer.java         ← routes files to the right specialist
 │       ├── ContextWindowManager.java   ← enforces token budgets per API call
-│       ├── EscalationHandler.java      ← human-in-the-loop circuit breaker
 │       └── AgentResultAggregator.java  ← merges findings from all agents
 │
 ├── workshop-server/                    ← MCP server layer (Phase 1)
@@ -230,7 +229,7 @@ This is **Phase 1, in progress** — the foundation has been laid.
 ⏳ Day 7    ContextWindowManager + TaskDecomposer
 ⏳ Day 8-9  OrchestratorAgent + StartReviewTool + GetReportTool
               (first testable end-to-end flow in Claude Desktop)
-⏳ Day 10   EscalationHandler + RespondToEscalationTool
+⏳ Day 10   OrchestratorAgent.escalate() + RespondToEscalationTool
               (human-in-the-loop complete)
 ```
 
@@ -305,7 +304,7 @@ Until then, use the fat JAR directly.)*
 ## Why This Approach
 
 Most certification prep is passive: watch a video, take a quiz, move on.
-This project forces active learning. You cannot add the `EscalationHandler`
+This project forces active learning. You cannot implement `OrchestratorAgent.escalate()`
 without understanding *why* an agentic loop needs a pause point.
 You cannot implement `ContextWindowManager` without understanding token budgets.
 You cannot make `SecurityAuditorAgent` return valid findings without

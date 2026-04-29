@@ -12,8 +12,7 @@ import java.util.List;
  * all agents in the review session.</p>
  *
  * <p>Flow: {@code SubAgent.execute()} → {@code AgentResult} →
- * {@code SelfEvaluatorAgent} (validates quality) →
- * {@code EscalationHandler} (checks for CRITICAL) →
+ * {@code OrchestratorAgent#escalate()} (checks for CRITICAL, pauses if needed) →
  * {@code AgentResultAggregator} (merges into {@code ReviewReport})</p>
  *
  * <p>CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam):

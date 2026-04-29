@@ -10,7 +10,6 @@
  *   <li>{@code OrchestratorAgent}     — drives the loop; owns session state</li>
  *   <li>{@code TaskDecomposer}        — routes files to the right specialist</li>
  *   <li>{@code ContextWindowManager}  — enforces token budgets per agent call</li>
- *   <li>{@code EscalationHandler}     — human-in-the-loop circuit breaker</li>
  *   <li>{@code AgentResultAggregator} — merges + deduplicates findings across agents</li>
  * </ul>
  *
@@ -20,7 +19,7 @@
  * described in the certification course.</p>
  *
  * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
- * {@code ContextWindowManager} and {@code EscalationHandler} together
+ * {@code ContextWindowManager} and {@code OrchestratorAgent#escalate()} together
  * implement the two key reliability patterns: token budget management
  * and human-in-the-loop escalation.</p>
  *

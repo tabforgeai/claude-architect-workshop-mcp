@@ -16,7 +16,7 @@ package ai.tabforge.workshop.model;
  *
  * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
  * Severity drives the human-in-the-loop escalation logic in
- * {@code EscalationHandler}. The rule: CRITICAL + confidence ≥ 0.70
+ * {@code OrchestratorAgent#escalate()}. The rule: CRITICAL + confidence ≥ 0.70
  * pauses the autonomous review and surfaces a decision to the developer.
  * This is the "circuit breaker" pattern tested in the exam.</p>
  */
@@ -24,7 +24,7 @@ public enum Severity {
 
     /**
      * A finding that must be resolved before the code is safe to merge.
-     * Triggers human-in-the-loop escalation in {@code EscalationHandler}
+     * Triggers human-in-the-loop escalation in {@code OrchestratorAgent#escalate()}
      * when confidence ≥ 0.70.
      *
      * <p>Examples: SQL injection via JPQL string concatenation,
