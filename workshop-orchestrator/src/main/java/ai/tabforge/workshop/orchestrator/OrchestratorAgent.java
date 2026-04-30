@@ -49,7 +49,7 @@ import ai.tabforge.workshop.model.Severity;
  * </p>
  *
  * <p>
- * This class is the core learning artifact for the "Agentic Architecture &
+ * This class is the core learning artifact for the "Agentic Architecture &amp;
  * Orchestration" exam domain (27%) - Domain 1, from <a href=
  * "https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F8lsy243ftffjjy1cx9lm3o2bw%2Fpublic%2F1773274827%2FClaude+Certified+Architect+%E2%80%93+Foundations+Certification+Exam+Guide.pdf">Claude
  * Certified Architect – Foundations Certification Exam Guide</a>
@@ -87,9 +87,7 @@ import ai.tabforge.workshop.model.Severity;
  * writes a session, GetReportTool reads it, RespondToEscalationTool modifies it.</p>
  *
  * @see TaskDecomposer for how the project is split into reviewable chunks
- * @see ContextWindowManager for how token limits are respected per agent call
  * @see #escalate(String, Finding) for the human-in-the-loop decision logic
- * @see AgentResultAggregator for how findings from all agents are merged
  */
 
 public class OrchestratorAgent implements ProgressReporter{
@@ -277,7 +275,7 @@ public class OrchestratorAgent implements ProgressReporter{
 	}
 	
 	 /**
-	  * Will be called by the {@link SubAgent#execute()} during file processing,
+	  * Will be called by the {@code SubAgent.execute()} during file processing,
 	  * to push live progress data into the {@code ReviewSession} .
 	  *
 	  * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture &amp; Orchestration (27%):
