@@ -15,14 +15,14 @@ import java.util.Map;
  * <p>Serialized as JSON by {@code GetReportTool} and returned to Claude,
  * which then presents it to the developer in natural language.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 2: Tool Design & MCP Integration (18%):
+ * <p>CERTIFICATION NOTE — Domain 2: Tool Design &amp; MCP Integration (18%):
  * {@code ReviewReport} is the JSON payload returned by {@code GetReportTool}
  * to Claude Desktop. The field names, structure, and the explicit
  * {@code safeToMerge} boolean are deliberate MCP tool design decisions —
  * Claude must be able to reason about this JSON and present it to the
  * developer in natural language without ambiguity.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 4: Prompt Engineering & Structured Output (20%):
+ * <p>CERTIFICATION NOTE — Domain 4: Prompt Engineering &amp; Structured Output (20%):
  * The JSON produced from this record is what Claude receives from the MCP tool
  * and then summarizes for the developer. Designing the output schema so that
  * Claude can reason about it effectively (clear field names, sorted findings,
@@ -56,7 +56,7 @@ public record ReviewReport(
     /**
      * Current lifecycle state of the review session.
      *
-     * <p>CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam):
+     * <p>CERTIFICATION NOTE — Agentic Architecture &amp; Orchestration (27% of exam):
      * These states map to the agentic loop stages in {@code OrchestratorAgent}.
      * {@code GetReportTool} returns different JSON based on which state
      * the review is in — running progress vs. final report vs. escalation request.

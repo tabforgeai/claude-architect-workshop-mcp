@@ -8,7 +8,7 @@
  *   <li>{@code LifecycleHook} — onBeforeAgent / onAfterAgent / onEscalation hooks</li>
  * </ul>
  *
- * <p>CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam):
+ * <p>CERTIFICATION NOTE — Agentic Architecture &amp; Orchestration (27% of exam):
  * {@code SubAgent} is the contract in the agent specialization pattern.
  * The OrchestratorAgent works with {@code SubAgent} references only —
  * it does not know (and does not need to know) which specialist is running.</p>

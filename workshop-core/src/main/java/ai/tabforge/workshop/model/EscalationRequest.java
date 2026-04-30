@@ -11,7 +11,7 @@ import java.util.List;
  * sends to the electrician: "I tripped on this specific problem, here are
  * your options, please decide."</p>
  *
- * <p>Flow:
+ * <p>Flow:</p>
  * <ol>
  *   <li>{@code OrchestratorAgent#escalate()} detects CRITICAL finding with confidence ≥ 0.70</li>
  *   <li>Creates {@code EscalationRequest} and returns it to {@code OrchestratorAgent}</li>
@@ -21,16 +21,15 @@ import java.util.List;
  *   <li>Developer calls {@code RespondToEscalationTool} with their decision</li>
  *   <li>{@code OrchestratorAgent.resumeAfterEscalation()} is called → review continues</li>
  * </ol>
- * </p>
  *
- * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture &amp; Orchestration (27%):
  * {@code EscalationRequest} is what the {@code OrchestratorAgent} returns to
  * the MCP layer when it cannot proceed autonomously. The orchestrator stores
  * the review session in AWAITING_HUMAN state and attaches this object so
  * {@code GetReportTool} can surface it to Claude Desktop. The loop is paused,
  * not terminated — it resumes exactly where it stopped once the human decides.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
+ * <p>CERTIFICATION NOTE — Domain 5: Context Management &amp; Reliability (15%):
  * This class represents the "pause point" in an agentic loop — the moment
  * when the system decides it cannot continue autonomously and must involve
  * a human. The exam tests: when should an agent pause? What information

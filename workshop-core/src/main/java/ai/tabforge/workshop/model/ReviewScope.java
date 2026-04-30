@@ -11,7 +11,7 @@ package ai.tabforge.workshop.model;
  * ReviewScope is the profile that tells the orchestrator how deep to go
  * and which specialists to involve.</p>
  *
- * <p>CERTIFICATION NOTE — Tool Design & MCP Integration (18% of exam):
+ * <p>CERTIFICATION NOTE — Tool Design &amp; MCP Integration (18% of exam):
  * {@code ReviewScope} is constructed from the MCP tool input parameters.
  * {@code StartReviewTool} receives raw JSON from Claude, validates it,
  * and produces a {@code ReviewScope}. This is the boundary where untyped
@@ -46,7 +46,7 @@ public record ReviewScope(
     /**
      * Which files to include in the review.
      *
-     * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
+     * <p>CERTIFICATION NOTE — Context Management &amp; Reliability (15% of exam):
      * CHANGED_FILES is the default scope because it minimises token usage.
      * A full project scan of 150 files costs ~$0.43; a typical PR diff
      * of 10 changed files costs ~$0.03. The token budget strategy starts

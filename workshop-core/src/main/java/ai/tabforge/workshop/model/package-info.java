@@ -13,7 +13,7 @@
  *   <li>{@code Severity}          — CRITICAL / WARNING / INFO</li>
  * </ul>
  *
- * <p>CERTIFICATION NOTE — Prompt Engineering & Structured Output (20% of exam):
+ * <p>CERTIFICATION NOTE — Prompt Engineering &amp; Structured Output (20% of exam):
  * The JSON schema enforced in every Anthropic API call is derived from
  * these record types. {@code Finding} IS the output contract that every
  * sub-agent's {@code response_format} parameter enforces.</p>

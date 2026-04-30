@@ -12,14 +12,14 @@ package ai.tabforge.workshop.model;
  * Claude API JSON response. Collected by {@code AgentResultAggregator}
  * into the final {@code ReviewReport}.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture &amp; Orchestration (27%):
  * {@code Finding} is the atomic output unit of every sub-agent. Each specialist
  * (SecurityAuditorAgent, TransactionAnalystAgent, etc.) produces a list of these.
  * The {@code AgentResultAggregator} collects them from all agents and merges them
  * into the final {@code ReviewReport}. This is the data that flows between
  * the agentic loop stages.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 4: Prompt Engineering & Structured Output (20%):
+ * <p>CERTIFICATION NOTE — Domain 4: Prompt Engineering &amp; Structured Output (20%):
  * This record IS the output contract for every sub-agent API call.
  * The JSON schema enforced via {@code response_format} in each Anthropic API
  * call is derived from the fields of this record. If Claude's response does
@@ -75,7 +75,7 @@ public record Finding(
     /**
      * Returns true if this finding is confident enough to trigger escalation.
      *
-     * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
+     * <p>CERTIFICATION NOTE — Context Management &amp; Reliability (15% of exam):
      * The 0.70 threshold is the confidence calibration boundary used by
      * {@code OrchestratorAgent#escalate()}. Findings below this threshold are
      * downgraded to INFO — the agent signals uncertainty rather than

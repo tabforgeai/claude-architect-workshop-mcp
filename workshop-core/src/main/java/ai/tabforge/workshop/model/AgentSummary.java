@@ -8,13 +8,13 @@ package ai.tabforge.workshop.model;
  * Each agent gets its own summary line so the developer can see
  * which specialist took the longest and how many issues it found.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture & Orchestration (27%):
+ * <p>CERTIFICATION NOTE — Domain 1: Agentic Architecture &amp; Orchestration (27%):
  * {@code AgentSummary} is what the {@code AgentResultAggregator} produces for
  * each sub-agent after the review completes. It lets the orchestrator report
  * not just what was found, but how each agent performed — a production
  * multi-agent system must be observable, not just functional.</p>
  *
- * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
+ * <p>CERTIFICATION NOTE — Domain 5: Context Management &amp; Reliability (15%):
  * The {@code inputTokens} and {@code outputTokens} fields feed into
  * {@code ReviewReport.totalTokensUsed()} and {@code estimatedTotalCostUsd()}.
  * Tracking per-agent token consumption is how the system surfaces cost

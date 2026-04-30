@@ -15,7 +15,7 @@ import java.util.List;
  * {@code OrchestratorAgent#escalate()} (checks for CRITICAL, pauses if needed) →
  * {@code AgentResultAggregator} (merges into {@code ReviewReport})</p>
  *
- * <p>CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam):
+ * <p>CERTIFICATION NOTE — Agentic Architecture &amp; Orchestration (27% of exam):
  * {@code AgentResult} is the handoff object between the agentic loop stages.
  * Every stage in the orchestrator (COLLECT → EVALUATE → ESCALATE → AGGREGATE)
  * operates on this record. Understanding what travels between stages
@@ -49,7 +49,7 @@ public record AgentResult(
     /**
      * Returns total token usage for budget tracking.
      *
-     * <p>CERTIFICATION NOTE — Domain 5: Context Management & Reliability (15%):
+     * <p>CERTIFICATION NOTE — Domain 5: Context Management &amp; Reliability (15%):
      * {@code ContextWindowManager} calls this method after every agent completes
      * to track cumulative token consumption across the entire review session.
      * If the running total approaches the session budget, the manager splits

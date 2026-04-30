@@ -13,12 +13,12 @@
  *   <li>{@code AgentResultAggregator} — merges + deduplicates findings across agents</li>
  * </ul>
  *
- * <p>CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam):
+ * <p>CERTIFICATION NOTE — Agentic Architecture &amp; Orchestration (27% of exam):
  * {@code OrchestratorAgent} is the central exam artifact for this domain.
  * The lifecycle stages above map directly to the agentic loop patterns
  * described in the certification course.</p>
  *
- * <p>CERTIFICATION NOTE — Context Management & Reliability (15% of exam):
+ * <p>CERTIFICATION NOTE — Context Management &amp; Reliability (15% of exam):
  * {@code ContextWindowManager} and {@code OrchestratorAgent#escalate()} together
  * implement the two key reliability patterns: token budget management
  * and human-in-the-loop escalation.</p>

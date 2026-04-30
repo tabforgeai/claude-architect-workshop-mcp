@@ -11,7 +11,7 @@
  *   <li>{@code SelfEvaluatorAgent}       — meta-agent that evaluates other agents' output</li>
  * </ul>
  *
- * <p>CERTIFICATION NOTE — Agentic Architecture & Orchestration (27% of exam):
+ * <p>CERTIFICATION NOTE — Agentic Architecture &amp; Orchestration (27% of exam):
  * Narrow specialist agents with focused system prompts outperform a single
  * general-purpose agent on complex multi-domain analysis. Agent specialization
  * is a core pattern in production agentic systems.</p>
