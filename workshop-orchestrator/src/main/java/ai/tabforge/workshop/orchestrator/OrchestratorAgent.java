@@ -2,6 +2,9 @@ package ai.tabforge.workshop.orchestrator;
 
 import java.nio.file.Path;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -9,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +27,14 @@ import ai.tabforge.workshop.agents.ArchitectureCheckerAgent;
 import ai.tabforge.workshop.agents.PerformanceAnalystAgent;
 import ai.tabforge.workshop.agents.SecurityAuditorAgent;
 import ai.tabforge.workshop.agents.TransactionAnalystAgent;
+import ai.tabforge.workshop.model.AgentResult;
+import ai.tabforge.workshop.model.AgentSummary;
 import ai.tabforge.workshop.model.EscalationRequest;
 import ai.tabforge.workshop.model.Finding;
 import ai.tabforge.workshop.model.HumanDecision;
 import ai.tabforge.workshop.model.ReviewReport;
 import ai.tabforge.workshop.model.ReviewScope;
+import ai.tabforge.workshop.model.Severity;
 
 /**
  * The central coordinator of the Workshop review — manages all sub-agents,
@@ -113,11 +120,19 @@ public class OrchestratorAgent implements ProgressReporter{
 	 *                    → calls OrchestratorAgent.startReview(scope) → returns {
 	 *                      reviewId: "abc-123" } without waiting to Claude AI
 	 *</code></pre>
+	 * But, before returning the result to Claude AI, this method starts the agents execution in background threads, collects their results, and stores them in a review session.
+	 * 
+	 * 
 	 * <p>
 	 * Analogy: like submitting a job to Java's ExecutorService — you get a Future
 	 * (reviewId) immediately; the work runs in the background. The MCP caller
 	 * (Claude AI) does not block waiting for results.
 	 * </p>
+	 * 
+	 * <p>
+	 *   GetReportTool will periodically check status, by calling getStatus() from this class - see getStatus() javaDoc for an explanation of how this method is ensured to be called by GetReportTool.
+	 *   The state in the ReviewSession is changed in two ways: 1. by the agents that are working  (by calling the updateProgress() method from this class), 2. as well as in this method itself.
+	 * </>
 	 * 
 	 *
 	 * @param scope ReviewScope defining project path and review depth
@@ -135,26 +150,68 @@ public class OrchestratorAgent implements ProgressReporter{
 	      
 	      executor.submit(() -> {
 	          try {
-	              // a. TaskDecomposer:
-	        	  Map<Class<? extends SubAgent>, List<Path>> agentWork = decomposer.decompose(scope);
-	              // b. agent execution:
-	        	  for (Map.Entry<Class<? extends SubAgent>, List<Path>> entry : agentWork.entrySet()) {
-	        	      AgentContext context = new AgentContext(
-	        	          scope.projectPath(),
-	        	          entry.getValue(),
-	        	          reviewId,
-	        	          4096
-	        	      );
-	        	      SubAgent agent = createAgent(entry.getKey());
-	        	      agent.execute(context);
-	        	  }
-	              // c. COMPLETED
-	        	  session.setStatus(ReviewReport.ReviewStatus.COMPLETED);
+	              Map<Class<? extends SubAgent>, List<Path>> agentWork = decomposer.decompose(scope);
+                  // list of results of each agent:
+	              List<AgentResult> results = new ArrayList<>();
+	              // statistic to be included in ReviewReport (number of filesScanned, criticalCount etc..)
+	              // Key is agent name:
+	              Map<String, AgentSummary> summaries = new HashMap<>();
+
+	              for (Map.Entry<Class<? extends SubAgent>, List<Path>> entry : agentWork.entrySet()) {
+	                  // proveri da nije cancelovano izmedju agenata
+	                  if (session.getStatus() == ReviewReport.ReviewStatus.CANCELLED) return;
+
+	                  AgentContext context = new AgentContext(
+	                      scope.projectPath(), entry.getValue(), reviewId, 4096);
+	                  SubAgent agent = createAgent(entry.getKey());
+	                  // call the agent:
+	                  AgentResult result = agent.execute(context); // list of Findings for this agent etc...
+	                  results.add(result);
+
+	                  summaries.put(result.agentName(), new AgentSummary(
+	                      result.agentName(),
+	                      entry.getValue().size(),
+	                      result.findings().size(),
+	                      (int) result.findings().stream()
+	                          .filter(f -> f.severity() == Severity.CRITICAL).count(),
+	                      result.inputTokens(),
+	                      result.outputTokens(),
+	                      result.durationMs(),
+	                      result.retryCount()
+	                  ));
+	              }
+
+	              List<Finding> allFindings = results.stream()
+	                  .flatMap(r -> r.findings().stream())
+	                  .collect(Collectors.toList());
+
+	              Severity overallRisk = allFindings.stream()
+	                  .map(Finding::severity)
+	                  .min(Comparator.comparingInt(Severity::ordinal))
+	                  .orElse(Severity.INFO);
+
+	              boolean safeToMerge = allFindings.stream()
+	                  .noneMatch(f -> f.severity() == Severity.CRITICAL);
+
+	              session.setReport(new ReviewReport(
+	                  reviewId,
+	                  scope.projectPath().toString(),
+	                  session.getStartedAt(),
+	                  Instant.now().toString(),
+	                  ReviewReport.ReviewStatus.COMPLETED,
+	                  overallRisk,
+	                  safeToMerge,
+	                  allFindings,
+	                  summaries,
+	                  List.of()  // humanDecisions — prazno za Phase 1
+	              ));
+	              session.setStatus(ReviewReport.ReviewStatus.COMPLETED);
+
 	          } catch (Exception e) {
 	              session.setStatus(ReviewReport.ReviewStatus.FAILED);
 	              logger.error("Review failed, reviewId={}", reviewId, e);
 	          }
-	      });
+	      });	      
 	      return reviewId;
 	}
 	
@@ -173,13 +230,19 @@ public class OrchestratorAgent implements ProgressReporter{
 
 	/**
 	 * Read content from the activeSessions.
-	 * 
+	 *
+	 * <p> 
 	 * The caller (Claude AI) polls {@code GetReportTool} for completion. We do not
 	 * write any polling loop in the code in order for GetReportTool to be called .
 	 * We do not send instructions to Claude at runtime. We just describe the
 	 * GetReportTool well - and Claude deduces from the tool description himself the
-	 * logic of when and how to use it. On the other side, we must call this method
-	 * explicitly in the GetReportTool.
+	 * logic of when and how to use it. IMPORTANT: On the other side, we must call this method
+	 * explicitly in the GetReportTool, and that behaviour is implemented in GetReportTool.toolSpecification(), 
+	 * more precise, in GetReportTool.execute(). The GetReportTool.toolSpecification() is the method which returns the
+	 * McpServerFeatures.AsyncToolSpecification, which is required when registering MCP tool with
+	 *  io.modelcontextprotocol.server.McpServer. 
+	 *  It is a mechanism that ensures that this very method is called when GetReportTool is triggered by Claude AI.
+	 * </p>
 	 * 
 	 * Here is chain of call for this method:
 	 * <pre><code>

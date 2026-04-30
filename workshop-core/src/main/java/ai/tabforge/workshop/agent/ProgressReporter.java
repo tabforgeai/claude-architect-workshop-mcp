@@ -18,7 +18,8 @@ public interface ProgressReporter {
     /**
      * <p>
      *  If agent finds critical finding during file procession, and before continuing with the next file, 
-     *  it will notify the orchestrator of the escalation, and stop the work. The agent does this by calling this method (the orchestrator implements this interface)
+     *  it will notify the orchestrator of the escalation, and stop the work. The agent notifies orchestrator this by calling this method 
+     *  (the orchestrator implements this interface), and, in fact, the orchestrator should stop the agent, by using CountDownLatch mechanism.
      *  </p>
      *  
      *   <p>

@@ -90,7 +90,7 @@ public class RespondToEscalationTool {
 		      }
 		      """;	
 	  /*
-	   * RespondToEscalationTool description must tell Claude three things:
+	   * Any tool description must tell Claude three things:
 	   * 
 	   * when to call him,
          what to send him,
