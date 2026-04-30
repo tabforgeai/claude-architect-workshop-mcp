@@ -1,0 +1,62 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+--class-path
+'C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/target/classes;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-core/target/classes;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-agents/target/classes;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-orchestrator/target/classes;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-server/target/classes;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-installer/target/classes;C:/Users/svetozar.radojcin/.m2/repository/org/slf4j/slf4j-api/2.0.13/slf4j-api-2.0.13.jar;C:/Users/svetozar.radojcin/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.19.2/jackson-databind-2.19.2.jar;C:/Users/svetozar.radojcin/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.19.2/jackson-annotations-2.19.2.jar;C:/Users/svetozar.radojcin/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.19.2/jackson-core-2.19.2.jar;C:/Users/svetozar.radojcin/.m2/repository/ch/qos/logback/logback-classic/1.5.13/logback-classic-1.5.13.jar;C:/Users/svetozar.radojcin/.m2/repository/ch/qos/logback/logback-core/1.5.13/logback-core-1.5.13.jar;C:/Users/svetozar.radojcin/.m2/repository/com/anthropic/anthropic-java/2.18.0/anthropic-java-2.18.0.jar;C:/Users/svetozar.radojcin/.m2/repository/com/anthropic/anthropic-java-client-okhttp/2.18.0/anthropic-java-client-okhttp-2.18.0.jar;C:/Users/svetozar.radojcin/.m2/repository/com/anthropic/anthropic-java-core/2.18.0/anthropic-java-core-2.18.0.jar;C:/Users/svetozar.radojcin/.m2/repository/com/google/errorprone/error_prone_annotations/2.33.0/error_prone_annotations-2.33.0.jar;C:/Users/svetozar.radojcin/.m2/repository/io/swagger/core/v3/swagger-annotations/2.2.31/swagger-annotations-2.2.31.jar;C:/Users/svetozar.radojcin/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.0/kotlin-stdlib-jdk8-1.8.0.jar;C:/Users/svetozar.radojcin/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.0/kotlin-stdlib-1.8.0.jar;C:/Users/svetozar.radojcin/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.8.0/kotlin-stdlib-common-1.8.0.jar;C:/Users/svetozar.radojcin/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar;C:/Users/svetozar.radojcin/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.0/kotlin-stdlib-jdk7-1.8.0.jar;C:/Users/svetozar.radojcin/.m2/repository/io/modelcontextprotocol/sdk/mcp/1.0.0/mcp-1.0.0.jar;C:/Users/svetozar.radojcin/.m2/repository/io/modelcontextprotocol/sdk/mcp-json-jackson3/1.0.0/mcp-json-jackson3-1.0.0.jar;C:/Users/svetozar.radojcin/.m2/repository/tools/jackson/core/jackson-databind/3.0.3/jackson-databind-3.0.3.jar;C:/Users/svetozar.radojcin/.m2/repository/tools/jackson/core/jackson-core/3.0.3/jackson-core-3.0.3.jar;C:/Users/svetozar.radojcin/.m2/repository/com/networknt/json-schema-validator/3.0.0/json-schema-validator-3.0.0.jar;C:/Users/svetozar.radojcin/.m2/repository/com/ethlo/time/itu/1.14.0/itu-1.14.0.jar;C:/Users/svetozar.radojcin/.m2/repository/tools/jackson/dataformat/jackson-dataformat-yaml/3.0.3/jackson-dataformat-yaml-3.0.3.jar;C:/Users/svetozar.radojcin/.m2/repository/org/snakeyaml/snakeyaml-engine/2.10/snakeyaml-engine-2.10.jar;C:/Users/svetozar.radojcin/.m2/repository/io/modelcontextprotocol/sdk/mcp-core/1.0.0/mcp-core-1.0.0.jar;C:/Users/svetozar.radojcin/.m2/repository/io/projectreactor/reactor-core/3.7.0/reactor-core-3.7.0.jar;C:/Users/svetozar.radojcin/.m2/repository/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'21'
+-sourcepath
+'C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-core/src/main/java;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-core/target/generated-sources/annotations;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-agents/src/main/java;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-agents/target/generated-sources/annotations;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-orchestrator/src/main/java;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-orchestrator/target/generated-sources/annotations;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-server/src/main/java;C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/workshop-server/target/generated-sources/annotations'
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Eclipse2025_Workspace/claude-architect-workshop-mcp/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-Xdoclint:none
+-doctitle
+'Claude Architect Workshop MCP 1.0.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'Claude Architect Workshop MCP 1.0.0-SNAPSHOT API'
+ai.tabforge.workshop.agent
+ai.tabforge.workshop.model
+ai.tabforge.workshop.agents
+ai.tabforge.workshop.orchestrator
+ai.tabforge.workshop
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java = 1777555942840
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\target\generated-sources\annotations = 1777556275084
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-agents\src\main\java = 1777555942778
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-agents\target\generated-sources\annotations = 1777556430434
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-orchestrator\src\main\java = 1777555942872
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-orchestrator\target\generated-sources\annotations = 1777556575623
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-server\src\main\java = 1777555942903
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-server\target\generated-sources\annotations = 1777556576661
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\allclasses-index.html = 1777556580228
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\allpackages-index.html = 1777556580233
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\copy.svg = 1777556580299
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\element-list = 1777556579901
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\help-doc.html = 1777556580293
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\index-all.html = 1777556580284
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\index.html = 1777556580183
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\link.svg = 1777556580300
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\member-search-index.js = 1777556580241
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\module-search-index.js = 1777556580236
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\overview-summary.html = 1777556580289
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\overview-tree.html = 1777556580178
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\package-search-index.js = 1777556580238
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\script.js = 1777556580297
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\search-page.js = 1777556580304
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\search.html = 1777556580287
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\search.js = 1777556580303
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\stylesheet.css = 1777556580296
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\tag-search-index.js = 1777556580243
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\target\reports\apidocs\type-search-index.js = 1777556580239

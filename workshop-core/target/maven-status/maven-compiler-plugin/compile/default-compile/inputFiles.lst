@@ -1,0 +1,13 @@
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\agent\AgentContext.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\agent\package-info.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\agent\ProgressReporter.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\agent\SubAgent.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\AgentResult.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\AgentSummary.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\EscalationRequest.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\Finding.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\HumanDecision.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\package-info.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\ReviewReport.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\ReviewScope.java
+C:\Eclipse2025_Workspace\claude-architect-workshop-mcp\workshop-core\src\main\java\ai\tabforge\workshop\model\Severity.java

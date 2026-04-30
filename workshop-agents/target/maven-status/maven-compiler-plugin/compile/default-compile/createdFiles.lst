@@ -1,0 +1,6 @@
+ai\tabforge\workshop\agents\ArchitectureCheckerAgent.class
+ai\tabforge\workshop\agents\DefaultSubAgent.class
+ai\tabforge\workshop\agents\package-info.class
+ai\tabforge\workshop\agents\TransactionAnalystAgent.class
+ai\tabforge\workshop\agents\SecurityAuditorAgent.class
+ai\tabforge\workshop\agents\PerformanceAnalystAgent.class
