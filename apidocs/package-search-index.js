@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"ai.tabforge.workshop"},{"l":"ai.tabforge.workshop.agent"},{"l":"ai.tabforge.workshop.agents"},{"l":"ai.tabforge.workshop.model"},{"l":"ai.tabforge.workshop.orchestrator"},{"l":"All Packages","u":"allpackages-index.html"}];updateSearchResults();
