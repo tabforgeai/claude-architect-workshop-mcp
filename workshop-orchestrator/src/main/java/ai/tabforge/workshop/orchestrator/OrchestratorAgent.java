@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,6 +99,8 @@ public class OrchestratorAgent implements ProgressReporter{
 	private Map<String, ReviewSession> activeSessions = new ConcurrentHashMap<>();
     private final ExecutorService executor = Executors.newCachedThreadPool();
     private final TaskDecomposer decomposer = new TaskDecomposer();
+    private final ContextWindowManager contextWindowManager = new ContextWindowManager();
+    private final AgentResultAggregator aggregator = new AgentResultAggregator();
 
 	/**
 	 * Starts a new review session asynchronously and returns immediately with a
@@ -160,7 +161,8 @@ public class OrchestratorAgent implements ProgressReporter{
 	                  if (session.getStatus() == ReviewReport.ReviewStatus.CANCELLED) return;
 
 	                  AgentContext context = new AgentContext(
-	                      scope.projectPath(), entry.getValue(), reviewId, 4096);
+	                      scope.projectPath(), entry.getValue(), reviewId,
+	                      contextWindowManager.getDefaultMaxOutputTokens());
 	                  SubAgent agent = createAgent(entry.getKey());
 	                  // call the agent:
 	                  AgentResult result = agent.execute(context); // list of Findings for this agent etc...
@@ -179,10 +181,9 @@ public class OrchestratorAgent implements ProgressReporter{
 	                  ));
 	              }
 
-	              List<Finding> allFindings = results.stream()
-	                  .flatMap(r -> r.findings().stream())
-	                  .collect(Collectors.toList());
-
+	           // AGGREGATE step: merge and deduplicate findings from all agents
+	              List<Finding> allFindings = aggregator.aggregate(results);
+	              
 	              Severity overallRisk = allFindings.stream()
 	                  .map(Finding::severity)
 	                  .min(Comparator.comparingInt(Severity::ordinal))

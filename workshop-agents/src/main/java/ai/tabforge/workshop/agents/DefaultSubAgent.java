@@ -59,11 +59,11 @@ public abstract class DefaultSubAgent extends SubAgent {
 </code></pre>
 	   */
 	  @Override
-	  protected AgentResult analyzeFile(String prompt, String fileContent) {
+	  protected AgentResult analyzeFile(String prompt, String fileContent, int maxOutputTokens) {
 	      Message response = client.messages().create(
 	          MessageCreateParams.builder()
 	              .model(Model.CLAUDE_HAIKU_4_5_20251001)
-	              .maxTokens(4096)
+	              .maxTokens(maxOutputTokens)
 	              .system(prompt)
 	              .addUserMessage(fileContent)
 	              .build()

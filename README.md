@@ -213,23 +213,35 @@ few-shot examples. One contract, three representations.
 
 ## Current Status
 
-This is **Phase 1, in progress** — the foundation has been laid.
+This is **Phase 1, in progress** — the core agentic loop is complete.
 
 ```
 ✅ Day 1-2  Multi-module Maven setup, both SDKs wired and compiling
               Anthropic Java SDK 2.18.0 + MCP SDK 1.0.0
-              ApiSmokeTest: MCP SDK verified ✓, Anthropic API pending credits
-✅ Day 3-4  Complete domain model implemented (8 classes, all with CERTIFICATION NOTEs)
-              Finding, ReviewReport, ReviewScope, AgentResult, AgentSummary,
-              EscalationRequest, HumanDecision, Severity
+              ApiSmokeTest: MCP SDK verified ✓
 
-⏳ Day 5-6  SubAgent abstract class + SecurityAuditorAgent
-              (first real Claude API call from a sub-agent)
-⏳ Day 7    ContextWindowManager + TaskDecomposer
-⏳ Day 8-9  OrchestratorAgent + StartReviewTool + GetReportTool
-              (first testable end-to-end flow in Claude Desktop)
-⏳ Day 10   OrchestratorAgent.escalate() + RespondToEscalationTool
-              (human-in-the-loop complete)
+✅ Day 3-4  Complete domain model (9 classes, all with CERTIFICATION NOTEs)
+              Finding, ReviewReport, ReviewScope, AgentResult, AgentSummary,
+              EscalationRequest, HumanDecision, Severity, ReviewSession
+
+✅ Day 5-6  SubAgent abstract class + DefaultSubAgent + all 4 specialist agents
+              SecurityAuditorAgent, TransactionAnalystAgent,
+              PerformanceAnalystAgent, ArchitectureCheckerAgent
+
+✅ Day 7    TaskDecomposer — routes files to the right specialist agent
+
+✅ Day 8-9  OrchestratorAgent — full agentic loop (INIT → DECOMPOSE → DISPATCH
+              → COLLECT → EVALUATE → ESCALATE → AGGREGATE → COMPLETE)
+              WorkshopServer + Main — MCP server wired and starts over STDIO
+              StartReviewTool, GetReportTool — first testable end-to-end flow
+
+✅ Day 10   OrchestratorAgent.escalate() + CountDownLatch pause/resume
+              RespondToEscalationTool, CancelReviewTool
+              Human-in-the-loop complete
+
+⏳ Next     ContextWindowManager — file chunking + token budget enforcement
+              AgentResultAggregator — merges and deduplicates findings across agents
+              End-to-end test with real Anthropic API calls in Claude Desktop
 ```
 
 ---

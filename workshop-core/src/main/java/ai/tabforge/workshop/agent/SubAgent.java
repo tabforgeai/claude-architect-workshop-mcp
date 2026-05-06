@@ -25,7 +25,7 @@ public abstract class SubAgent {
 	  }
 
     /**
-     * 
+     * Called by the OrchestratorAgent.startReview()
      * @param context - created and passed to this method by {@link OrchestratorAgent#startReview()}
      * @return
      */
@@ -46,7 +46,7 @@ public abstract class SubAgent {
           try {
               String fileContent = Files.readString(file);
      	      //  Claude API call:
-              AgentResult result = analyzeFile(prompt, fileContent);
+              AgentResult result = analyzeFile(prompt, fileContent, context.getTokenBudget());
               allFindings.addAll(result.findings());
               
               for (Finding f : result.findings()) {
@@ -93,6 +93,6 @@ public abstract class SubAgent {
      * @param fileContent
      * @return
      */
-    protected abstract AgentResult analyzeFile(String prompt, String fileContent);
+    protected abstract AgentResult analyzeFile(String prompt, String fileContent, int maxOutputTokens);
     protected abstract String getAgentName();
 }
