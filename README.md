@@ -148,13 +148,12 @@ claude-architect-workshop-mcp/          ← root POM (this repo)
 ├── workshop-server/                    ← MCP server layer (Phase 1)
 │   └── ai.tabforge.workshop/
 │       ├── Main.java                   ← entry point
+│       ├── WorkshopServer.java         ← wires all tools, starts MCP server over STDIO
 │       ├── ApiSmokeTest.java           ← verifies both SDKs at startup
-│       └── tools/
-│           ├── StartReviewTool.java    ← MCP: initiates a review session
-│           ├── GetReportTool.java      ← MCP: polls for results / final report
-│           ├── RespondToEscalationTool.java ← MCP: human-in-the-loop channel
-│           ├── ListActiveReviewsTool.java   ← MCP: lists running sessions
-│           └── CancelReviewTool.java   ← MCP: cancels a running review
+│       ├── StartReviewTool.java        ← MCP: initiates a review session
+│       ├── GetReportTool.java          ← MCP: polls for results / final report
+│       ├── RespondToEscalationTool.java ← MCP: human-in-the-loop channel
+│       └── CancelReviewTool.java       ← MCP: cancels a running review
 │
 └── workshop-installer/                 ← jpackage native installers (Phase 4)
     └── ClaudeArchitectWorkshop.exe / .deb / .rpm

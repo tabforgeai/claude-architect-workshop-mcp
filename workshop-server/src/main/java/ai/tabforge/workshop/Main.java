@@ -41,7 +41,8 @@ public class Main {
         }
 
         // Full MCP server startup — implemented in Phase 1 Day 8-9
-        log.info("MCP server startup not yet implemented. Run with --smoke-test to verify SDKs.");
-        log.info("See Phase 1 Day 8-9 in CLAUDE_ARCHITECT_WORKSHOP_MCP_PLAN.md");
+     // Start MCP server (blocks until shutdown)
+        WorkshopServer server = new WorkshopServer();
+        server.start();
     }
 }
